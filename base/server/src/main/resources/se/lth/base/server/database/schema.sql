@@ -31,7 +31,8 @@ INSERT INTO user (role_id, username, salt, password_hash)
 -- Example table containing some data per user, you are expected to remove this table in your project.
 CREATE TABLE foo(
     -- First the four columns are specified:
-
+    
+    
     foo_id INT AUTO_INCREMENT,
     -- foo_id is the first column with type INT. This is used to uniquely identify each foo. In this way, the foo can be
     -- deleted or updated by referring only to its foo_id. The AUTO_INCREMENT keyword is H2 specific and indicates
@@ -52,15 +53,19 @@ CREATE TABLE foo(
     -- which is created by the function CURRENT_TIMESTAMP() if not supplied during creation.
 
     -- Here are some additional constraints that the data must relate to:
+    total INT NOT NULL DEFAULT 1,
 
     PRIMARY KEY(foo_id),
+    
     -- This defines foo_id as the unique identifier of the table. It adds NOT NULL to the column and
     -- enforces that the values rows all have a unique identifier.
-
+    CHECK (total > 0),
+    
     FOREIGN KEY(user_id) REFERENCES user(user_id) ON DELETE CASCADE
     -- This informs that the column user_id is a relation to another table's primary key. In combination
     -- with the NOT NULL constraint above it is not possible to enter data that is not connected to a user.
     -- Note that there can be multiple rows with the same user_id (but the foo_id is unique for each row).
     -- The ON DELETE CASCADE ensures that when a user is deleted then all their foo data will also be deleted.
+    
 );
 

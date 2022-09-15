@@ -54,4 +54,24 @@ public class FooResource {
     public List<Foo> getAllFoos() {
         return fooDao.getAllFoo();
     }
+    @POST
+    @RolesAllowed(Role.Names.USER)
+    @Path("{fooId}/total/{newTotal}")
+    public void updateFoo(@PathParam("fooId") int fooId, @PathParam("newTotal") int newTotal) {
+        if (!fooDao.updateTotal(user.getId(), fooId, newTotal)) {
+            throw new WebApplicationException(404);
+        }
+    }
+    
+    // Implement this method and add correct annotations
+    // It should match HTTP calls like this:
+    // DELETE /rest/foo/4
+    @DELETE
+    @RolesAllowed(Role.Names.USER)
+    // TODO: please add @Path annotation
+    @Path("user/{foo_id}")
+    public void deleteFoo( @PathParam("foo_id") int foo_Id) {
+        // TODO: please call the correct method in fooDao
+        fooDao.deleteFoo(user.getId(), foo_Id);
+    }
 }
